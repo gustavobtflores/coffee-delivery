@@ -4,7 +4,9 @@ export const Container = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 0;
+  padding: 2rem;
+  max-width: calc(1120px + 2rem * 2);
+  margin: 0 auto;
 `;
 
 export const DeliveryLocation = styled.span`
