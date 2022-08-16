@@ -59,12 +59,8 @@ export function CoffeeCard({
             <Minus size={14} weight={'bold'} />
           </button>
           {amount}
-          <button>
-            <Plus
-              onClick={() => setAmount(amount + 1)}
-              size={14}
-              weight="bold"
-            />
+          <button onClick={() => setAmount(amount + 1)}>
+            <Plus size={14} weight="bold" />
           </button>
         </AmountSelector>
         <CartButton onClick={() => addCoffee(id, amount)}>
