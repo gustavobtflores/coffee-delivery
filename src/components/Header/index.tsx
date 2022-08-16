@@ -1,8 +1,17 @@
 import { MapPin, ShoppingCartSimple } from 'phosphor-react';
-import { ActionsMenu, Cart, Container, DeliveryLocation } from './styles';
+import {
+  ActionsMenu,
+  Cart,
+  CartAmount,
+  Container,
+  DeliveryLocation,
+} from './styles';
 import logoImg from '../../assets/logo.svg';
+import { useCart } from '../../hooks/useCart';
 
 export function Header() {
+  const { cart } = useCart();
+
   return (
     <Container>
       <ActionsMenu>
@@ -12,6 +21,7 @@ export function Header() {
         </DeliveryLocation>
         <Cart>
           <ShoppingCartSimple weight="fill" size={22} />
+          {cart.length > 0 ? <CartAmount>{cart.length}</CartAmount> : null}
         </Cart>
       </ActionsMenu>
       <img src={logoImg} alt="" />

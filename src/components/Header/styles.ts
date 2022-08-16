@@ -38,4 +38,22 @@ export const Cart = styled.button`
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  position: relative;
+`;
+
+export const CartAmount = styled.span`
+  background-color: ${(props) => props.theme['yellow-dark']};
+  color: ${(props) => props.theme.white};
+  border-radius: 1000px;
+  font-weight: 700;
+  font-size: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -8px;
+  right: -8px;
 `;
