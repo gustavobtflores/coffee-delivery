@@ -18,4 +18,5 @@ export const CoffeesListWrapper = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 40px 32px;
   justify-items: center;
+  padding-bottom: 40px;
 `;

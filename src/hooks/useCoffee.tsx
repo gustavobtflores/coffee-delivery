@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   createContext,
   ReactNode,
   useContext,
   useEffect,
   useState,
-} from 'react';
+} from "react";
 
 export interface Coffee {
   id: number;
@@ -14,6 +14,7 @@ export interface Coffee {
   image: string;
   price: number;
   tags: string[];
+  amount: number;
 }
 
 interface CoffeeContextData {
@@ -32,7 +33,7 @@ export function CoffeeProvider({ children }: CoffeeProviderProps) {
   useEffect(() => {
     const getCoffeesList = async () => {
       const coffeesList = await axios(
-        'https://tranquil-cove-89175.herokuapp.com/coffees.json'
+        "https://tranquil-cove-89175.herokuapp.com/coffees.json"
       ).then((res) => {
         return res.data.coffees;
       });
