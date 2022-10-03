@@ -1,13 +1,13 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
-import toast from 'react-hot-toast';
-import { Coffee, useCoffee } from './useCoffee';
+import { createContext, ReactNode, useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { Coffee, useCoffee } from "./useCoffee";
 
 interface CartProviderProps {
   children: ReactNode;
 }
 
 interface CartContextData {
-  cart: any[];
+  cart: Coffee[];
   addCoffee: (productId: number, amount: number) => void;
   removeCoffee: (productId: number) => void;
 }
@@ -19,7 +19,11 @@ interface Cart extends Coffee {
 const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
-  const [cart, setCart] = useState<Cart[]>([]);
+  const [cart, setCart] = useState<Cart[]>(() => {
+    const storagedCart = localStorage.getItem("@CoffeeDelivery:cart");
+
+    return storagedCart ? JSON.parse(storagedCart) : [];
+  });
   const { coffees } = useCoffee();
 
   function addCoffee(productId: number, amount: number) {
@@ -35,12 +39,14 @@ export function CartProvider({ children }: CartProviderProps) {
     );
 
     if (isProductAlreadyOnCart !== -1) {
-      toast.error('Produto já adicionado ao carrinho');
+      toast.error("Produto já adicionado ao carrinho");
     } else {
-      setCart((cart) => [...cart, coffeeWithAmount]);
+      const newCart = [...cart, coffeeWithAmount];
+      setCart(newCart);
       toast.success(
         `${coffeeWithAmount.name} x ${coffeeWithAmount.amount} adicionado ao carrinho`
       );
+      localStorage.setItem("@CoffeeDelivery:cart", JSON.stringify(newCart));
     }
   }
 

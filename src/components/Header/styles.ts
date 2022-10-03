@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const Container = styled.header`
   display: flex;
@@ -15,9 +16,9 @@ export const DeliveryLocation = styled.span`
   gap: 0.25rem;
   padding: 8px;
   line-height: 1.3;
-  background-color: ${(props) => props.theme['purple-light']};
+  background-color: ${(props) => props.theme["purple-light"]};
   font-size: 14px;
-  color: ${(props) => props.theme['purple-dark']};
+  color: ${(props) => props.theme["purple-dark"]};
   border-radius: 6px;
 
   svg {
@@ -31,9 +32,9 @@ export const ActionsMenu = styled.nav`
   gap: 12px;
 `;
 
-export const Cart = styled.button`
-  background: ${(props) => props.theme['yellow-light']};
-  color: ${(props) => props.theme['yellow-dark']};
+export const Cart = styled(Link)`
+  background: ${(props) => props.theme["yellow-light"]};
+  color: ${(props) => props.theme["yellow-dark"]};
   padding: 0.5rem;
   border-radius: 6px;
   border: none;
@@ -42,7 +43,7 @@ export const Cart = styled.button`
 `;
 
 export const CartAmount = styled.span`
-  background-color: ${(props) => props.theme['yellow-dark']};
+  background-color: ${(props) => props.theme["yellow-dark"]};
   color: ${(props) => props.theme.white};
   border-radius: 1000px;
   font-weight: 700;

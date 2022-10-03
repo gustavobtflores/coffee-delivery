@@ -1,14 +1,15 @@
-import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react';
-import { useState } from 'react';
-import { useCart } from '../../hooks/useCart';
+import { ShoppingCartSimple } from "phosphor-react";
+import { useState } from "react";
+import { useCart } from "../../hooks/useCart";
+import { formatCurrency } from "../../utils/Formatter";
+import { AmountSelector } from "../AmountSelector";
 import {
-  AmountSelector,
   CartButton,
   CoffeeWrapper,
   Price,
   SelectionMenu,
   Tags,
-} from './styles';
+} from "./styles";
 
 interface CoffeeCardProps {
   name: string;
@@ -30,9 +31,9 @@ export function CoffeeCard({
   const [amount, setAmount] = useState(1);
   const { addCoffee } = useCart();
 
-  const currencyFormat = new Intl.NumberFormat('pt-BR', {
-    minimumFractionDigits: 2,
-  });
+  const handleAmountChange = (quantity: number) => {
+    setAmount(quantity);
+  };
 
   return (
     <CoffeeWrapper>
@@ -46,23 +47,9 @@ export function CoffeeCard({
       <p>{description}</p>
       <SelectionMenu>
         <Price>
-          R$ <strong>{currencyFormat.format(price)}</strong>
+          R$ <strong>{formatCurrency(price)}</strong>
         </Price>
-        <AmountSelector>
-          <button
-            onClick={() => {
-              if (amount > 1) {
-                setAmount(amount - 1);
-              }
-            }}
-          >
-            <Minus size={14} weight={'bold'} />
-          </button>
-          {amount}
-          <button onClick={() => setAmount(amount + 1)}>
-            <Plus size={14} weight="bold" />
-          </button>
-        </AmountSelector>
+        <AmountSelector amount={amount} onAmountChange={handleAmountChange} />
         <CartButton onClick={() => addCoffee(id, amount)}>
           <ShoppingCartSimple size={22} weight="fill" />
         </CartButton>
