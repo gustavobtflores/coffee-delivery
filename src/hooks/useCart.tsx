@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import toast from "react-hot-toast";
 import { Coffee, useCoffee } from "./useCoffee";
 
@@ -26,6 +32,10 @@ export function CartProvider({ children }: CartProviderProps) {
   });
   const { coffees } = useCoffee();
 
+  useEffect(() => {
+    localStorage.setItem("@CoffeeDelivery:cart", JSON.stringify(cart));
+  }, [cart]);
+
   function addCoffee(productId: number, amount: number) {
     const coffeeToAdd = coffees.find((coffee) => coffee.id === productId);
     const coffeeWithAmount = coffeeToAdd ? { ...coffeeToAdd, amount } : null;
@@ -46,12 +56,12 @@ export function CartProvider({ children }: CartProviderProps) {
       toast.success(
         `${coffeeWithAmount.name} x ${coffeeWithAmount.amount} adicionado ao carrinho`
       );
-      localStorage.setItem("@CoffeeDelivery:cart", JSON.stringify(newCart));
     }
   }
 
   function removeCoffee(productId: number) {
-    console.log(`Remove product: ${productId}`);
+    const newCart = cart.filter((coffee) => coffee.id !== productId);
+    setCart(newCart);
   }
 
   return (

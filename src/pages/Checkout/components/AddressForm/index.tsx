@@ -1,7 +1,7 @@
 import axios from "axios";
 import { MapPinLine } from "phosphor-react";
 import { useEffect, useRef, useState } from "react";
-import { BaseInput, CepInput } from "../Inputs";
+import { BaseInput, CepInput } from "../../../../components/Inputs";
 import {
   AddressCard,
   AddressCardTitle,
@@ -9,7 +9,7 @@ import {
   FormWrapper,
 } from "./styles";
 
-export function AdressForm() {
+export function AddressForm() {
   const [cepValue, setCepValue] = useState("");
   const streetInput = useRef<HTMLInputElement>(null);
   const districtInput = useRef<HTMLInputElement>(null);
