@@ -14,8 +14,9 @@ interface CartProviderProps {
 
 interface CartContextData {
   cart: Coffee[];
-  addCoffee: (productId: number, amount: number) => void;
-  removeCoffee: (productId: number) => void;
+  addCoffee: (id: number, amount: number) => void;
+  removeCoffee: (id: number) => void;
+  changeCoffeeAmount: (id: number, amount: number) => void;
 }
 
 interface Cart extends Coffee {
@@ -26,9 +27,9 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Cart[]>(() => {
-    const storagedCart = localStorage.getItem("@CoffeeDelivery:cart");
+    const storedCart = localStorage.getItem("@CoffeeDelivery:cart");
 
-    return storagedCart ? JSON.parse(storagedCart) : [];
+    return storedCart ? JSON.parse(storedCart) : [];
   });
   const { coffees } = useCoffee();
 
@@ -64,8 +65,24 @@ export function CartProvider({ children }: CartProviderProps) {
     setCart(newCart);
   }
 
+  function changeCoffeeAmount(productId: number, newAmount: number) {
+    const currentCoffeeIndex = coffees.findIndex(
+      (coffee) => coffee.id === productId
+    );
+
+    const updatedCoffee = { ...cart[currentCoffeeIndex], amount: newAmount };
+
+    const newCart = [...cart];
+
+    newCart[currentCoffeeIndex] = updatedCoffee;
+
+    setCart(newCart);
+  }
+
   return (
-    <CartContext.Provider value={{ cart, addCoffee, removeCoffee }}>
+    <CartContext.Provider
+      value={{ cart, addCoffee, removeCoffee, changeCoffeeAmount }}
+    >
       {children}
     </CartContext.Provider>
   );

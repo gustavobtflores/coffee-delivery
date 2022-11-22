@@ -15,7 +15,7 @@ import {
 } from "./styles";
 
 export function CartCheckout() {
-  const { cart, removeCoffee } = useCart();
+  const { cart, removeCoffee, changeCoffeeAmount } = useCart();
   const [itemsTotal, setTotal] = useState(0);
   const shipping = 3.5;
   const total = itemsTotal + shipping;
@@ -27,9 +27,8 @@ export function CartCheckout() {
     setTotal(total);
   }, [cart]);
 
-  const handleAmountChange = (quantity: number, coffeeId: number) => {
-    console.log("called");
-    console.log(quantity, coffeeId);
+  const handleAmountChange = (amount: number, coffeeId: number) => {
+    changeCoffeeAmount(coffeeId, amount);
   };
 
   return (

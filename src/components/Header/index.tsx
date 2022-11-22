@@ -8,6 +8,7 @@ import {
 } from "./styles";
 import logoImg from "../../assets/logo.svg";
 import { useCart } from "../../hooks/useCart";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const { cart } = useCart();
@@ -24,7 +25,9 @@ export function Header() {
           {cart.length > 0 ? <CartAmount>{cart.length}</CartAmount> : null}
         </Cart>
       </ActionsMenu>
-      <img src={logoImg} alt="" />
+      <Link to="/">
+        <img src={logoImg} alt="" />
+      </Link>
     </Container>
   );
 }
