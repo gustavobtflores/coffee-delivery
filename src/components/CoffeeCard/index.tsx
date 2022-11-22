@@ -49,7 +49,11 @@ export function CoffeeCard({
         <Price>
           R$ <strong>{formatCurrency(price)}</strong>
         </Price>
-        <AmountSelector amount={amount} onAmountChange={handleAmountChange} />
+        <AmountSelector
+          coffeeId={id}
+          amount={amount}
+          onAmountChange={handleAmountChange}
+        />
         <CartButton onClick={() => addCoffee(id, amount)}>
           <ShoppingCartSimple size={22} weight="fill" />
         </CartButton>
