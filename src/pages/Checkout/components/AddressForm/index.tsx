@@ -11,24 +11,35 @@ import {
 
 export function AddressForm() {
   const [cepValue, setCepValue] = useState("");
+  const [cepError, setCepError] = useState(false);
   const streetInput = useRef<HTMLInputElement>(null);
   const districtInput = useRef<HTMLInputElement>(null);
   const cityInput = useRef<HTMLInputElement>(null);
   const stateInput = useRef<HTMLInputElement>(null);
 
-  async function getCepInfo() {
+  async function handleGetCepInfo() {
+    if (cepValue.length !== 8 || !cepValue) return;
+
     const cepData = await axios
       .get(`https://viacep.com.br/ws/${cepValue}/json/`)
       .then((res) => {
         return res.data;
       });
 
-    if (cepData.erro) return;
+    if (cepData.erro) {
+      setCepError(true);
+      return;
+    }
 
     streetInput.current!.value = cepData.logradouro;
     districtInput.current!.value = cepData.bairro;
     cityInput.current!.value = cepData.localidade;
     stateInput.current!.value = cepData.uf;
+
+    streetInput.current!.disabled = true;
+    districtInput.current!.disabled = true;
+    cityInput.current!.disabled = true;
+    stateInput.current!.disabled = true;
   }
 
   return (
@@ -51,7 +62,7 @@ export function AddressForm() {
             onAccept={(unmaskedValue) => {
               setCepValue(unmaskedValue as string);
             }}
-            onBlur={getCepInfo}
+            onBlur={handleGetCepInfo}
           />
           <BaseInput
             type="text"
