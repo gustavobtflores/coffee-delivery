@@ -1,6 +1,7 @@
 import axios from "axios";
 import { MapPinLine } from "phosphor-react";
-import { useEffect, useRef, useState } from "react";
+import { FormEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BaseInput, CepInput } from "../../../../components/Inputs";
 import {
   AddressCard,
@@ -16,9 +17,17 @@ export function AddressForm() {
   const districtInput = useRef<HTMLInputElement>(null);
   const cityInput = useRef<HTMLInputElement>(null);
   const stateInput = useRef<HTMLInputElement>(null);
+  const numberInput = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   async function handleGetCepInfo() {
-    if (cepValue.length !== 8 || !cepValue) return;
+    if (cepValue.length !== 8) {
+      streetInput.current!.value = "";
+      districtInput.current!.value = "";
+      cityInput.current!.value = "";
+      stateInput.current!.value = "";
+      return;
+    }
 
     const cepData = await axios
       .get(`https://viacep.com.br/ws/${cepValue}/json/`)
@@ -27,7 +36,6 @@ export function AddressForm() {
       });
 
     if (cepData.erro) {
-      setCepError(true);
       return;
     }
 
@@ -42,6 +50,20 @@ export function AddressForm() {
     stateInput.current!.disabled = true;
   }
 
+  function handlePurchaseConfirm(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    navigate("/success", {
+      state: {
+        street: streetInput.current!.value,
+        number: numberInput.current!.value,
+        stateName: stateInput.current!.value,
+        city: cityInput.current!.value,
+        district: districtInput.current!.value,
+      },
+    });
+  }
+
   return (
     <AddressFormContainer>
       <AddressCard>
@@ -52,7 +74,7 @@ export function AddressForm() {
             <p>Informe o endereço onde deseja receber seu pedido</p>
           </div>
         </AddressCardTitle>
-        <FormWrapper>
+        <FormWrapper id="addressData" onSubmit={handlePurchaseConfirm}>
           <CepInput
             type="text"
             placeholder="CEP"
@@ -63,6 +85,7 @@ export function AddressForm() {
               setCepValue(unmaskedValue as string);
             }}
             onBlur={handleGetCepInfo}
+            required
           />
           <BaseInput
             type="text"
@@ -71,7 +94,12 @@ export function AddressForm() {
             ref={streetInput}
           />
           <div>
-            <BaseInput type="text" placeholder="Número" />
+            <BaseInput
+              type="text"
+              placeholder="Número"
+              required
+              ref={numberInput}
+            />
             <BaseInput type="text" placeholder="Complemento" fullWidth />
           </div>
           <div>

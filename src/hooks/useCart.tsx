@@ -66,15 +66,13 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function changeCoffeeAmount(productId: number, newAmount: number) {
-    const currentCoffeeIndex = coffees.findIndex(
-      (coffee) => coffee.id === productId
-    );
-
-    const updatedCoffee = { ...cart[currentCoffeeIndex], amount: newAmount };
-
     const newCart = [...cart];
 
-    newCart[currentCoffeeIndex] = updatedCoffee;
+    const coffeeToChangeIndex = newCart.findIndex(({ id }) => id === productId);
+
+    if (coffeeToChangeIndex !== -1) {
+      newCart[coffeeToChangeIndex].amount = newAmount;
+    }
 
     setCart(newCart);
   }

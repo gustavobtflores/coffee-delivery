@@ -1,12 +1,7 @@
-import {
-  Container,
-  IconRounded,
-  IntroWrapper,
-  Items,
-  TextContent,
-} from './styles';
-import illustrationImg from './assets/illustration.png';
-import { Coffee, Package, ShoppingCartSimple, Timer } from 'phosphor-react';
+import { Container, IntroWrapper, Items, TextContent } from "./styles";
+import illustrationImg from "./assets/illustration.png";
+import { Coffee, Package, ShoppingCartSimple, Timer } from "phosphor-react";
+import { IconRounded } from "../../../../components/IconRounded";
 
 export function Intro() {
   return (

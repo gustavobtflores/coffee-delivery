@@ -30,7 +30,7 @@ export const PaymentTitle = styled.div`
 
 export const PaymentOptions = styled.div`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0.75rem;
 `;
 
@@ -39,6 +39,8 @@ interface PaymentOptionProps {
 }
 
 export const PaymentOption = styled.button<PaymentOptionProps>`
+  min-width: 150px;
+  flex: 1 1 0px;
   border: none;
   background: none;
   cursor: pointer;
@@ -61,5 +63,6 @@ export const PaymentOption = styled.button<PaymentOptionProps>`
 
   svg {
     color: ${(props) => props.theme.purple};
+    flex-shrink: 0;
   }
 `;

@@ -97,6 +97,7 @@ export const CoffeeItemControls = styled.div`
   align-items: stretch;
   gap: 8px;
   margin-top: 8px;
+  flex-wrap: wrap;
 `;
 
 export const ConfirmButton = styled.button`
@@ -116,4 +117,12 @@ export const ConfirmButton = styled.button`
   &:hover {
     background-color: ${(props) => props.theme["yellow-dark"]};
   }
+`;
+
+export const CartEmpty = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
 `;

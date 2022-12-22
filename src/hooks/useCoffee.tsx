@@ -33,7 +33,7 @@ export function CoffeeProvider({ children }: CoffeeProviderProps) {
   useEffect(() => {
     const getCoffeesList = async () => {
       const coffeesList = await axios(
-        "https://tranquil-cove-89175.herokuapp.com/coffees.json"
+        "https://gustavobtflores.github.io/Data/coffees.json"
       ).then((res) => {
         return res.data.coffees;
       });

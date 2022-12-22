@@ -1,5 +1,6 @@
 import { Bank, CreditCard, CurrencyDollar, Money } from "phosphor-react";
 import { useState } from "react";
+import { usePayment } from "../../../../hooks/usePayment";
 import {
   PaymentContainer,
   PaymentOption,
@@ -8,10 +9,10 @@ import {
 } from "./styles";
 
 export function Payment() {
-  const [selectedPayment, setSelectedPayment] = useState("");
+  const { paymentMethod, changePaymentMethod } = usePayment();
 
   function handleSelectedPayment(type: string) {
-    setSelectedPayment(type);
+    changePaymentMethod(type);
   }
 
   return (
@@ -27,21 +28,21 @@ export function Payment() {
       </PaymentTitle>
       <PaymentOptions>
         <PaymentOption
-          selected={selectedPayment === "credit-card"}
+          selected={paymentMethod === "credit-card"}
           onClick={() => handleSelectedPayment("credit-card")}
         >
           <CreditCard size={20} />
           Cartão de crédito
         </PaymentOption>
         <PaymentOption
-          selected={selectedPayment === "debit-card"}
+          selected={paymentMethod === "debit-card"}
           onClick={() => handleSelectedPayment("debit-card")}
         >
           <Bank size={20} />
           Cartão de débito
         </PaymentOption>
         <PaymentOption
-          selected={selectedPayment === "money"}
+          selected={paymentMethod === "money"}
           onClick={() => handleSelectedPayment("money")}
         >
           <Money size={20} />
